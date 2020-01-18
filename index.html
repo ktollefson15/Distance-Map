@@ -1,52 +1,52 @@
-<style>
-  #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-  #map .estimateBox {
-  }
-  #map svg path {
-    cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-    -webkit-transition: opacity 0.2s ease;
-  }
-  .hoveredState {
-    opacity: 0.6 !important;
-  }
-  .orange {
-    fill: #f19240;
-  }
-  .blue {
-    fill: #4ecee8;
-  }
-  .yellow, .yellow {
-    fill: #f7ce5b;
-  }
-  .yellow {
-    stroke: #fff;
-    stroke-width: 2px;
-  }
 
-  .estimateBox {
-    font-family: 'helvatica', sans-serif;
-    line-height: 5px;
-    font-family: 16px;
-    line-height: 0.2em;
-  }
-  .estimateBox .stateName {
-    font-size: 1em;
-  }
-  .estimateBox .startingat, .estimateBox .daysestimate {
-    font-size: 0.5em;
-    font-weight: 100;
-  }
-</style>
+  <style>
+    #map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    #map .estimateBox {
+    }
+    #map svg path {
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+      -webkit-transition: opacity 0.2s ease;
+    }
+    .hoveredState {
+      opacity: 0.6 !important;
+    }
+    .orange {
+      fill: #f19240;
+    }
+    .blue {
+      fill: #4ecee8;
+    }
+    .yellow {
+      fill: #f7ce5b;
+    }
+
+    .estimateBox {
+      font-family: 'helvatica', sans-serif;
+      line-height: 5px;
+      font-family: 16px;
+      line-height: 0.2em;
+    }
+    .estimateBox .stateName {
+      font-size: 1em;
+    }
+    .estimateBox .startingat, .estimateBox .daysestimate {
+      font-size: 0.5em;
+      font-weight: 100;
+    }
+  </style>
+
+
+
 
 <div id="map">
-  
+
   <div class="estimateBox">
     <h3 class="statename">Indiana<h3>
     <p class="startingat">200<p>
@@ -154,4 +154,3 @@
   });
 
 </script>
-
