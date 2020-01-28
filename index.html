@@ -1,12 +1,15 @@
-
-  <style>
+<style>
     #map {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
     }
-    #map .estimateBox {
+    #map svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
     #map svg path {
       cursor: pointer;
@@ -27,30 +30,51 @@
       fill: #f7ce5b;
     }
 
-    .estimateBox {
+    #map .estimateBox {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      background: white;
+      z-index: 999;
+      opacity: 1;
+      padding: 20px;
+
       font-family: 'helvatica', sans-serif;
-      line-height: 5px;
-      font-family: 16px;
-      line-height: 0.2em;
+      font-size: 16px;
+    }
+    .estimateBox::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      background: white;
+    }
+    .active {
+      display: inline-block !important;
     }
     .estimateBox .stateName {
-      font-size: 1em;
+      font-size: 2.5em;
     }
-    .estimateBox .startingat, .estimateBox .daysestimate {
-      font-size: 0.5em;
-      font-weight: 100;
+    .estimateBox .priceEstimate, .estimateBox .daysEstimate {
+      font-size: 0.7em;
+      padding: 5px 0;
+      font-weight: 400;
+    }
+    .estimateBox .priceEstimate {
+      border-bottom: 1px solid black;
     }
   </style>
-
-
-
-
 <div id="map">
 
   <div class="estimateBox">
     <h3 class="statename">Indiana<h3>
-    <p class="startingat">200<p>
-    <p class="daysestimate">3 days<p>
+    <p class="priceEstimate">200<p>
+    <p class="daysEstimate">3 days<p>
   </div>
 
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 913.4 572.6">
@@ -111,45 +135,204 @@
 
 <script>
 
-  var states = document.querySelector('#map').querySelector('svg').querySelectorAll('path');
-  var statesData = {};
+  var statesData = {
+    'AL': {
+      'priceEstimate': 'From 6000'
+    },
+    'AZ': {
+      'priceEstimate': 'From 7000'
+    },
+    'AR': {
+      'priceEstimate': 'From 6500'
+    },
+    'CA': {
+      'priceEstimate': 'From 7000'
+    },
+    'CO': {
+      'priceEstimate': 'From 6000'
+    },
+    'CT': {
+      'priceEstimate': 'Local rates'
+    },
+    'DE': {
+      'priceEstimate': 'From 2500'
+    },
+    'FL': {
+      'priceEstimate': 'From 6000'
+    },
+    'GA': {
+      'priceEstimate': 'From 4500'
+    },
+    'ID': {
+      'priceEstimate': 'From 7500'
+    },
+    'IL': {
+      'priceEstimate': 'From 3500'
+    },
+    'IN': {
+      'priceEstimate': 'From 4000'
+    },
+    'IA': {
+      'priceEstimate': 'From 6000'
+    },
+    'KS': {
+      'priceEstimate': 'From 6000'
+    },
+    'KY': {
+      'priceEstimate': 'From 4500'
+    },
+    'LA': {
+      'priceEstimate': 'From 6500'
+    },
+    'ME': {
+      'priceEstimate': 'Local rates'
+    },
+    'MD': {
+      'priceEstimate': '2500'
+    },
+    'MA': {
+      'priceEstimate': 'Local rates'
+    },
+    'MI': {
+      'priceEstimate': '4500'
+    },
+    'MN': {
+      'priceEstimate': 'From 6500'
+    },
+    'MS': {
+      'priceEstimate': 'From 6000'
+    },
+    'MO': {
+      'priceEstimate': 'From 5500'
+    },
+    'MT': {
+      'priceEstimate': 'From 6500'
+    },
+    'NE': {
+      'priceEstimate': '6500'
+    },
+    'NV': {
+      'priceEstimate': 'From 7000'
+    },
+    'NH': {
+      'priceEstimate': 'Consider as local'
+    },
+    'NJ': {
+      'priceEstimate': 'From 1800'
+    },
+    'NM': {
+      'priceEstimate': 'From 6500'
+    },
+    'NY': {
+      'priceEstimate': '1500'
+    },
+    'NC': {
+      'priceEstimate': 'From 3500'
+    },
+    'NC': {
+      'priceEstimate': 'From 6500'
+    },
+    'OH': {
+      'priceEstimate': '3000'
+    },
+    'OK': {
+      'priceEstimate': 'From 6000'
+    },
+    'OR': {
+      'priceEstimate': 'From 7000'
+    },
+    'PA': {
+      'priceEstimate': 'From 2000'
+    },
+    'RI': {
+      'priceEstimate': 'Local rates'
+    },
+    'SC': {
+      'priceEstimate': '3800'
+    },
+    'SD': {
+      'priceEstimate': '6500'
+    },
+    'TN': {
+      'priceEstimate': '4500'
+    },
+    'TX': {
+      'priceEstimate': 'From 6000'
+    },
+    'UT': {
+      'priceEstimate': '7000'
+    },
+    'VT': {
+      'priceEstimate': 'From 1000'
+    },
+    'VA': {
+      'priceEstimate': 'From 3200'
+    },
+    'WA': {
+      'priceEstimate': '7000'
+    },
+    'WV': {
+      'priceEstimate': 'From 3500'
+    },
+    'WI': {
+      'priceEstimate': '4000'
+    },
+    'WY': {
+      'priceEstimate': '6000'
+    }
+  };
 
-  var estimateBox = document.querySelector('.estimateBox');
+  var map = document.querySelector('#map');
+  var stateSVGs = document.querySelector('#map').querySelector('svg').querySelectorAll('path');
+  var estimateBox = map.querySelector('.estimateBox');
   var stateName = estimateBox.querySelector('.statename');
-  var startingat = estimateBox.querySelector('.startingat');
-  var daysestimate = estimateBox.querySelector('.daysestimate');
+  var priceEstimate = estimateBox.querySelector('.priceEstimate');
+  var daysEstimate = estimateBox.querySelector('.daysEstimate');
 
-  states.forEach(function(state){
-    var daysestimate = '';
+  stateSVGs.forEach(function(stateSVG){
+    var a = '';
 
-    switch (state.classList[0]) {
+    switch (stateSVG.classList[0]) {
       case 'blue':
-        daysestimate = 'same/next day delivery';
+        a = 'same/next day delivery';
         break;
       case 'yellow':
-        daysestimate = '1-2 day delivery';
+        a = '1-2 day delivery';
         break;
       case 'orange':
-        daysestimate = '3-6 days delivery';
+        a = '3-6 days delivery';
         break;
     }
 
-    statesData[state.id] = {
-      //startingat: 200,
-      daysestimate: daysestimate
+    if(typeof statesData[stateSVG.id] != 'undefined'){
+      statesData[stateSVG.id]['daysEstimate'] = a;
+    } else {
+      statesData[stateSVG.id] = {};
+      statesData[stateSVG.id]['daysEstimate'] = a;
     }
   });
 
-  states.forEach(function(state){
-    state.addEventListener('mouseover', function(){
-      state.classList.add('hoveredState');
-
-      var hoveredState = statesData[state.id];
-      stateName.innerHTML = state.id;
-      daysestimate.innerHTML = hoveredState.daysestimate;
+  stateSVGs.forEach(function(stateSVG){
+    stateSVG.addEventListener('mousemove', function(e){
+      var x = e.clientX;
+      var y = e.clientY;
+      var boundingRect = map.getBoundingClientRect();
+      x = x - boundingRect.left + 20;
+      y = y - boundingRect.top + 20;
+      estimateBox.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      estimateBox.style.webkitTransform = 'translate(' + x + 'px, ' + y + 'px)';
     });
-    state.addEventListener('mouseout', function(){
-      state.classList.remove('hoveredState');
+    stateSVG.addEventListener('mouseover', function(){
+      estimateBox.classList.add('active');
+      stateSVG.classList.add('hoveredState');
+      var hoveredState = statesData[stateSVG.id];
+      stateName.innerHTML = stateSVG.id;
+      daysEstimate.innerHTML = hoveredState.daysEstimate;
+      priceEstimate.innerHTML = hoveredState.priceEstimate;
+    });
+    stateSVG.addEventListener('mouseout', function(){
+      estimateBox.classList.remove('active');
+      stateSVG.classList.remove('hoveredState');
     });
   });
 
