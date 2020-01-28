@@ -1,4 +1,4 @@
-<style>
+  <style>
     #map {
       position: absolute;
       top: 0;
@@ -29,7 +29,6 @@
     .yellow {
       fill: #f7ce5b;
     }
-
     #map .estimateBox {
       position: absolute;
       top: 0;
@@ -69,6 +68,7 @@
       border-bottom: 1px solid black;
     }
   </style>
+
 <div id="map">
 
   <div class="estimateBox">
@@ -319,6 +319,10 @@
       var boundingRect = map.getBoundingClientRect();
       x = x - boundingRect.left + 20;
       y = y - boundingRect.top + 20;
+      if(x > map.offsetWidth/2){
+        x = x - estimateBox.offsetWidth - 40;
+      }
+
       estimateBox.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
       estimateBox.style.webkitTransform = 'translate(' + x + 'px, ' + y + 'px)';
     });
